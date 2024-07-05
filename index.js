@@ -9,9 +9,13 @@ app.get("/", (req, res) => {
   res.send("<h1> Hello World </h1>");
 });
 
-app.post("/login", (req, res) => {
-  res.send("<h1> Hello World </h1>");
-});
+app.post("/register", (req, res) => {});
+
+app.post("/login", (req, res) => {});
+
+app.post("/logout", (req, res) => {});
+
+app.get("/protected", (req, res) => {});
 
 server.listen(PORT, () => {
   console.log(`server listening on http://localhost:${PORT}}`);
