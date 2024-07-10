@@ -1,7 +1,9 @@
 import express from "express";
 import { createServer } from "node:http";
-import { PORT } from "./config.js";
+import { connectionDB } from "./connection.js";
+import { PORT } from"./config.js"
 
+connectionDB();
 const app = express();
 const server = createServer(app);
 
