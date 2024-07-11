@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
-import bcrypt from "bcrypt";
 import z from "zod";
 
+// schema for mongo DB
 const userSchema = new mongoose.Schema(
   {
     name: {
@@ -30,15 +30,9 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-userSchema.pre("save", async function (next) {
-  if (this.isModified("password") || this.isNew) {
-    this.password = await bcrypt.hash(this.password, 10);
-  }
-  next();
-});
+export const User = mongoose.model("User", userSchema);
 
-const User = mongoose.model("User", userSchema);
-
+// Schema for validations with zod
 const userValidation = z
   .object({
     name: z.string({
@@ -57,21 +51,22 @@ const userValidation = z
     password: z
       .string({ required_error: "password is required" })
       .min(8, { message: "password must be 8 or more characters long" })
-      .symbol(),
-    confirmPassword: z
-      .string({ required_error: "confirm password is required" })
-      .min(8, {
-        message: "confirm password must be 8 or more characters long",
-      })
-      .symbol(),
+      .refine((password) => /[!@#$%^&*(),.?":{}|<>]/.test(password), {
+        message: "password must have a special symbol or character",
+      }),
+    confirmPassword: z.string({
+      required_error: "confirm password is required",
+    }),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords don't match",
     path: ["confirm"],
   });
 
-export default User;
-
 export function validateUser(input) {
   return userValidation.safeParse(input);
+}
+
+export function validatePartialUser(input) {
+  return userValidation.partial().safeParse(input);
 }
