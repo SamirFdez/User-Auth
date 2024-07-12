@@ -46,11 +46,18 @@ export class UserController {
 
   static async update(req, res) {}
 
+  // login user
   static async login(req, res) {
     const { username, password } = req.body;
 
     try {
-    } catch (error) {}
+      const login = await UserModel.login({ username, password });
+      res.json(login);
+    } catch (error) {
+      res
+        .status(500)
+        .json({ message: "Oops! error occurred while trying to log in" });
+    }
   }
 
   static async logout(req, res) {}

@@ -22,8 +22,8 @@ export class UserModel {
   static async register({ input }) {
     const { name, username, email, password } = input;
 
-    const users = await User.find().select("-password -__v");
-    const userExists = users.filter(
+    const users = await User.find({}, "username").select("-password -__v");
+    const userExists = users.find(
       (user) => user.username.toLowerCase() === username.toLowerCase()
     );
 
@@ -42,20 +42,28 @@ export class UserModel {
     return { message: "user saved successfully" };
   }
 
+  // login user
   static async login({ username, password }) {
-    try {
-      if (username === "" || password === "")
-        return { message: "Complete all fields to log in" };
+    if (username === "" || password === "")
+      return { message: "Complete all fields to log in" };
 
-      const user = User.findOne({ username: username });
-      if (!user) return { message: `${username} does not exist` };
+    const users = await User.find();
+    const user = users.find(
+      (user) => user.username.toLowerCase() === username.toLowerCase()
+    );
 
-      const isValid = await bcrypt.compare(password, user.password);
-      if (!isValid) return { message: "password is invalid" };
+    if (!user) return { message: `${username} does not exist` };
 
-      return user;
-    } catch (error) {
-      return { message: "Oops! error occurred while trying to log in" };
-    }
+    const isValid = await bcrypt.compare(password, user.password);
+    if (!isValid) return { message: "password is invalid" };
+
+    return {
+      _id: user._id,
+      name: user.name,
+      username: user.username,
+      email: user.name,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+    };
   }
 }

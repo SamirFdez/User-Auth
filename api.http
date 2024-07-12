@@ -9,9 +9,18 @@ POST  http://localhost:3000/users/register
 Content-Type: application/json
 
 {
-    "name": "Samir Fernandez",
-    "username": "samirfdez",
-    "email": "samir@prueba.com",
+    "name": "Lebron James",
+    "username": "KingJames",
+    "email": "LebronJ@prueba.com",
     "password": "prueb@123",
     "confirmPassword": "prueb@123"
+}
+
+### login user
+POST  http://localhost:3000/users/login
+Content-Type: application/json
+
+{
+    "username": "KingJames",
+    "password": "prueb@123"
 }
