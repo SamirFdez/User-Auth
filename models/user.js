@@ -2,42 +2,44 @@ import { User } from "../schemas/user.js";
 import bcrypt from "bcrypt";
 
 export class UserModel {
-  //get all users
+  // get all users
   static async getAll() {
-    try {
-      const users = await User.find().select("-password -__v");
-      return users;
-    } catch (error) {
-      return { message: "Oops! error getting all users" };
-    }
+    const users = await User.find().select("-password -__v");
+    return users;
   }
 
-  //register a user
+  // get user by username
+  static async getByUsername({ username }) {
+    const users = await User.find().select("-password -__v");
+    const user = users.filter(
+      (user) => user.username.toLowerCase() === username.toLowerCase()
+    );
+
+    return user;
+  }
+
+  // register a user
   static async register({ input }) {
     const { name, username, email, password } = input;
 
-    const queryUser = { username: username };
-    const optionsUser = { projection: { username: 1 } };
+    const users = await User.find().select("-password -__v");
+    const userExists = users.filter(
+      (user) => user.username.toLowerCase() === username.toLowerCase()
+    );
 
-    try {
-      const userExists = await User.findOne(queryUser, optionsUser);
+    if (userExists) return { message: `${username} already exists` };
 
-      if (userExists) return { message: `${username} already exists` };
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-      const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = new User({
+      name: name,
+      username: username,
+      email: email,
+      password: hashedPassword,
+    });
 
-      const newUser = new User({
-        name: name,
-        username: username,
-        email: email,
-        password: hashedPassword,
-      });
-
-      await newUser.save();
-      return { message: "user saved successfully" };
-    } catch (error) {
-      throw new Error("Oops! error registering user ");
-    }
+    await newUser.save();
+    return { message: "user saved successfully" };
   }
 
   static async login({ username, password }) {
@@ -51,7 +53,7 @@ export class UserModel {
       const isValid = await bcrypt.compare(password, user.password);
       if (!isValid) return { message: "password is invalid" };
 
-      return user
+      return user;
     } catch (error) {
       return { message: "Oops! error occurred while trying to log in" };
     }

@@ -4,22 +4,42 @@ import { validateUser } from "../schemas/user.js";
 export class UserController {
   //get all users
   static async getAll(req, res) {
-    const users = await UserModel.getAll();
-    res.json(users);
+    try {
+      const users = await UserModel.getAll();
+      res.json(users);
+    } catch (error) {
+      res.status(500).json({ message: "Oops! error getting all users" });
+    }
   }
 
-  static async getByUsername(req, res) {}
+  // get user by username
+  static async getByUsername(req, res) {
+    const { username } = req.params;
+    try {
+      const user = await UserModel.getByUsername({ username });
+      if (user) return res.json(user);
+      res.status(404).json({ message: "user not found" });
+    } catch (error) {
+      res.status(500).json({ message: "Oops! error getting user" });
+    }
+  }
 
   //register a user
   static async register(req, res) {
-    const result = validateUser(req.body);
+    try {
+      const result = validateUser(req.body);
 
-    if (result.error) {
-      return res.status(400).json({ error: JSON.parse(result.error.message) });
+      if (result.error) {
+        return res
+          .status(400)
+          .json({ error: JSON.parse(result.error.message) });
+      }
+
+      const newUser = await UserModel.register({ input: result.data });
+      res.json(newUser);
+    } catch (error) {
+      res.status(500).json({ message: "Oops! error registering user" });
     }
-
-    const newUser = await UserModel.register({ input: result.data });
-    res.json(newUser);
   }
 
   static async delete(req, res) {}

@@ -1,13 +1,16 @@
 ### Get all users 
 GET   http://localhost:3000/users
 
+### Get user by username 
+GET http://localhost:3000/users/samirfdez
+
 ### Register a user
 POST  http://localhost:3000/users/register
 Content-Type: application/json
 
 {
     "name": "Samir Fernandez",
-    "username": "SamirFdez",
+    "username": "samirfdez",
     "email": "samir@prueba.com",
     "password": "prueb@123",
     "confirmPassword": "prueb@123"
