@@ -1,5 +1,7 @@
 import { UserModel } from "../models/user.js";
 import { validateUser } from "../schemas/user.js";
+import { SECRET_JWT_KEY } from "../config.js";
+import jwt from "jsonwebtoken";
 
 export class UserController {
   //get all users
@@ -17,7 +19,7 @@ export class UserController {
     const { username } = req.params;
     try {
       const user = await UserModel.getByUsername({ username });
-      if (user) return res.json(user);
+      if (user) return res.json({ user });
       res.status(404).json({ message: "user not found" });
     } catch (error) {
       res.status(500).json({ message: "Oops! error getting user" });
@@ -51,8 +53,16 @@ export class UserController {
     const { username, password } = req.body;
 
     try {
-      const login = await UserModel.login({ username, password });
-      res.json(login);
+      const user = await UserModel.login({ username, password });
+      const token = jwt.sign(
+        { id: user._id, username: user.username },
+        SECRET_JWT_KEY,
+        { expiresIn: "1h" }
+      );
+
+      res
+        .cookie("access_token", token, { httpOnly: true, sameSite: "strict" })
+        .send({ user, token });
     } catch (error) {
       res
         .status(500)

@@ -22,12 +22,18 @@ export class UserModel {
   static async register({ input }) {
     const { name, username, email, password } = input;
 
-    const users = await User.find({}, "username").select("-password -__v");
-    const userExists = users.find(
+    const users = await User.find({}, "username email").select(
+      "-password -__v"
+    );
+    const usernameExists = users.find(
       (user) => user.username.toLowerCase() === username.toLowerCase()
     );
+    const emailExists = users.find(
+      (user) => user.email.toLowerCase() === email.toLowerCase()
+    );
 
-    if (userExists) return { message: `${username} already exists` };
+    if (usernameExists) return { message: `${username} already exists` };
+    if (emailExists) return { message: `${email} already exists` };
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -61,9 +67,7 @@ export class UserModel {
       _id: user._id,
       name: user.name,
       username: user.username,
-      email: user.name,
-      createdAt: user.createdAt,
-      updatedAt: user.updatedAt,
+      email: user.email,
     };
   }
 }

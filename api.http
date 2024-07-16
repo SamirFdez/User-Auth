@@ -2,7 +2,7 @@
 GET   http://localhost:3000/users
 
 ### Get user by username 
-GET http://localhost:3000/users/samirfdez
+GET http://localhost:3000/users/KingJames
 
 ### Register a user
 POST  http://localhost:3000/users/register
@@ -11,7 +11,7 @@ Content-Type: application/json
 {
     "name": "Lebron James",
     "username": "KingJames",
-    "email": "LebronJ@prueba.com",
+    "email": "LebronJ@prueba",
     "password": "prueb@123",
     "confirmPassword": "prueb@123"
 }
@@ -24,3 +24,4 @@ Content-Type: application/json
     "username": "KingJames",
     "password": "prueb@123"
 }
+
