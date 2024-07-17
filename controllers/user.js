@@ -1,6 +1,6 @@
 import { UserModel } from "../models/user.js";
 import { validateUser } from "../schemas/user.js";
-import { SECRET_JWT_KEY } from "../config.js";
+import { JWT_KEY } from "../config.js";
 import jwt from "jsonwebtoken";
 
 export class UserController {
@@ -8,7 +8,7 @@ export class UserController {
   static async getAll(req, res) {
     try {
       const users = await UserModel.getAll();
-      res.json(users);
+      res.json({ users });
     } catch (error) {
       res.status(500).json({ message: "Oops! error getting all users" });
     }
@@ -56,7 +56,7 @@ export class UserController {
       const user = await UserModel.login({ username, password });
       const token = jwt.sign(
         { id: user._id, username: user.username },
-        SECRET_JWT_KEY,
+        JWT_KEY,
         { expiresIn: "1h" }
       );
 
