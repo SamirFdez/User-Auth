@@ -11,7 +11,7 @@ export class UserModel {
   // get user by username
   static async getByUsername({ username }) {
     const users = await User.find().select("-password -__v");
-    const user = users.filter(
+    const user = users.find(
       (user) => user.username.toLowerCase() === username.toLowerCase()
     );
 
@@ -46,6 +46,23 @@ export class UserModel {
 
     await newUser.save();
     return { message: "user saved successfully" };
+  }
+
+  // delete user by id
+  static async delete({ id }) {
+    const user = await User.findByIdAndDelete(id);
+    return user;
+  }
+
+  // update user by id
+  static async update({ id, input }) {
+    const user = await User.findByIdAndUpdate(
+      id,
+      { $set: input },
+      { new: true }
+    ).select("-password -__v");
+
+    return user;
   }
 
   // login user

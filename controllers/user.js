@@ -1,5 +1,5 @@
 import { UserModel } from "../models/user.js";
-import { validateUser } from "../schemas/user.js";
+import { validateUser, validatePatchUser } from "../schemas/user.js";
 import { JWT_KEY } from "../config.js";
 import jwt from "jsonwebtoken";
 
@@ -44,9 +44,51 @@ export class UserController {
     }
   }
 
-  static async delete(req, res) {}
+  // delete user by id
+  static async delete(req, res) {
+    try {
+      const { id } = req.params;
 
-  static async update(req, res) {}
+      if (id.length !== 24)
+        return res.status(500).json({ message: "id is not valid" });
+
+      const user = await UserModel.delete({id});
+
+      if (!user) return res.status(404).json({ message: "user not found" });
+
+      res.json({ message: "User deleted successfully" });
+    } catch (error) {
+      res.status(500).json({ message: "Oops! error updating user" });
+    }
+  }
+
+  // update user by id
+  static async update(req, res) {
+    try {
+      const { id } = req.params;
+      const result = validatePatchUser(req.body);
+
+      if (id.length !== 24)
+        return res.status(500).json({ message: "id is not valid" });
+
+      if (result.error) {
+        return res
+          .status(400)
+          .json({ error: JSON.parse(result.error.message) });
+      }
+
+      const user = await UserModel.update({
+        id,
+        input: result.data,
+      });
+
+      if (!user) return res.status(404).json({ message: "user not found" });
+
+      res.json({ user, message: "user has been updated" });
+    } catch (error) {
+      res.status(500).json({ message: "Oops! error updating user" });
+    }
+  }
 
   // login user
   static async login(req, res) {
@@ -70,7 +112,6 @@ export class UserController {
     }
   }
 
+  // logout user
   static async logout(req, res) {}
-
-  static async protected(req, res) {}
 }

@@ -15,9 +15,9 @@ export const createUserRouter = () => {
 
   usersRouter.post("/register", UserController.register);
 
-  usersRouter.delete("/:username", authenticateToken, UserController.delete);
+  usersRouter.delete("/:id", authenticateToken, UserController.delete);
 
-  usersRouter.patch("/:username", authenticateToken, UserController.update);
+  usersRouter.patch("/:id", authenticateToken, UserController.update);
 
   usersRouter.post("/login", UserController.login);
 

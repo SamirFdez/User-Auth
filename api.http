@@ -1,28 +1,45 @@
 ### Get all users 
 GET   http://localhost:3000/users
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2OTY5ZTc0MGM5MDU0MGI4OGQ5NTNjYyIsInVzZXJuYW1lIjoiS2luZ0phbWVzIiwiaWF0IjoxNzIxMjQ2MDYwLCJleHAiOjE3MjEyNDk2NjB9.gMAI14g8CnR7qMoOQQoqMyjRkXOR0LxGZP-h88MuaRo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2OWI0MWQ3OGQ2M2RiNzk1MzAwOGZiYSIsInVzZXJuYW1lIjoiS2luZ0phbWVzIiwiaWF0IjoxNzIxNDUwOTg0LCJleHAiOjE3MjE0NTQ1ODR9.y-_1NV6D6t1Zxu51tt26hHBpdxBZqaYIDpAfScsZKwU
 
 ### Get user by username 
-GET http://localhost:3000/users/KingJames
+GET   http://localhost:3000/users/KingJames
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2OTY5ZTc0MGM5MDU0MGI4OGQ5NTNjYyIsInVzZXJuYW1lIjoiS2luZ0phbWVzIiwiaWF0IjoxNzIxMjQ2MDYwLCJleHAiOjE3MjEyNDk2NjB9.gMAI14g8CnR7qMoOQQoqMyjRkXOR0LxGZP-h88MuaRo
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2OWI0MWQ3OGQ2M2RiNzk1MzAwOGZiYSIsInVzZXJuYW1lIjoiS2luZ0phbWVzIiwiaWF0IjoxNzIxNDUwOTg0LCJleHAiOjE3MjE0NTQ1ODR9.y-_1NV6D6t1Zxu51tt26hHBpdxBZqaYIDpAfScsZKwU
 
 ### Register a user
-POST  http://localhost:3000/users/register
+POST   http://localhost:3000/users/register
 Content-Type: application/json
 
 {
     "name": "Lebron James",
     "username": "KingJames",
-    "email": "LebronJ@prueba",
+    "email": "Lebron@prueba.com",
     "password": "prueb@123",
     "confirmPassword": "prueb@123"
 }
 
+### Delete user by id
+DELETE    http://localhost:3000/users/669b4712628467f41713a278
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2OWI0MWQ3OGQ2M2RiNzk1MzAwOGZiYSIsInVzZXJuYW1lIjoiS2luZ0phbWVzIiwiaWF0IjoxNzIxNDUwOTg0LCJleHAiOjE3MjE0NTQ1ODR9.y-_1NV6D6t1Zxu51tt26hHBpdxBZqaYIDpAfScsZKwU
+
+
+
+### Update user by id
+PATCH   http://localhost:3000/users/669b4712628467f41713a278
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2OWI0MWQ3OGQ2M2RiNzk1MzAwOGZiYSIsInVzZXJuYW1lIjoiS2luZ0phbWVzIiwiaWF0IjoxNzIxNDUwOTg0LCJleHAiOjE3MjE0NTQ1ODR9.y-_1NV6D6t1Zxu51tt26hHBpdxBZqaYIDpAfScsZKwU
+
+
+{
+    "name": "new name",
+    "email": "new_email@example.com"
+}
+
 ### login user
-POST  http://localhost:3000/users/login
+POST   http://localhost:3000/users/login
 Content-Type: application/json
 
 {
