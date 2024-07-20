@@ -52,7 +52,7 @@ export class UserController {
       if (id.length !== 24)
         return res.status(500).json({ message: "id is not valid" });
 
-      const user = await UserModel.delete({id});
+      const user = await UserModel.delete({ id });
 
       if (!user) return res.status(404).json({ message: "user not found" });
 
@@ -96,6 +96,9 @@ export class UserController {
 
     try {
       const user = await UserModel.login({ username, password });
+
+      if (!user._id) return res.status(400).json(user);
+
       const token = jwt.sign(
         { id: user._id, username: user.username },
         JWT_KEY,
