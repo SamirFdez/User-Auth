@@ -102,7 +102,7 @@ export class UserController {
       const token = jwt.sign(
         { id: user._id, username: user.username },
         JWT_KEY,
-        { expiresIn: "1h" }
+        { expiresIn: "7d" }
       );
 
       res
@@ -116,5 +116,7 @@ export class UserController {
   }
 
   // logout user
-  static async logout(req, res) {}
+  static async logout(req, res) {
+    res.clearCookie("access_token").json({ message: "Logout successful" });
+  }
 }

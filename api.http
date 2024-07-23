@@ -1,12 +1,14 @@
 ### Get all users 
 GET   http://localhost:3000/users
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2OWI0MWQ3OGQ2M2RiNzk1MzAwOGZiYSIsInVzZXJuYW1lIjoiS2luZ0phbWVzIiwiaWF0IjoxNzIxNDUwOTg0LCJleHAiOjE3MjE0NTQ1ODR9.y-_1NV6D6t1Zxu51tt26hHBpdxBZqaYIDpAfScsZKwU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2OWI0NzEyNjI4NDY3ZjQxNzEzYTI3OCIsInVzZXJuYW1lIjoiS2luZ0phbWVzIiwiaWF0IjoxNzIxNzQxMjc3LCJleHAiOjE3MjE3NDQ4Nzd9.fjTBwGy8uCH4CvYf6dyl-oiqNUxteIuQSSyAs-YyRGU
+
 
 ### Get user by username 
 GET   http://localhost:3000/users/KingJames
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2OWI0MWQ3OGQ2M2RiNzk1MzAwOGZiYSIsInVzZXJuYW1lIjoiS2luZ0phbWVzIiwiaWF0IjoxNzIxNDUwOTg0LCJleHAiOjE3MjE0NTQ1ODR9.y-_1NV6D6t1Zxu51tt26hHBpdxBZqaYIDpAfScsZKwU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2OWI0NzEyNjI4NDY3ZjQxNzEzYTI3OCIsInVzZXJuYW1lIjoiS2luZ0phbWVzIiwiaWF0IjoxNzIxNzQ5NjU3LCJleHAiOjE3MjE3NTMyNTd9.zEdquLSmbojZWCzzrieheDN1puwrbXG77ddv5gdswf0
+
 
 ### Register a user
 POST   http://localhost:3000/users/register
@@ -20,23 +22,23 @@ Content-Type: application/json
     "confirmPassword": "prueb@123"
 }
 
-### Delete user by id
-DELETE    http://localhost:3000/users/669b4712628467f41713a278
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2OWI0MWQ3OGQ2M2RiNzk1MzAwOGZiYSIsInVzZXJuYW1lIjoiS2luZ0phbWVzIiwiaWF0IjoxNzIxNDUwOTg0LCJleHAiOjE3MjE0NTQ1ODR9.y-_1NV6D6t1Zxu51tt26hHBpdxBZqaYIDpAfScsZKwU
 
+### Delete user by id
+DELETE    http://localhost:3000/users/:id
+Content-Type: application/json
+Authorization: Bearer 
 
 
 ### Update user by id
-PATCH   http://localhost:3000/users/669b4712628467f41713a278
+PATCH   http://localhost:3000/users/:id
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2OWI0MWQ3OGQ2M2RiNzk1MzAwOGZiYSIsInVzZXJuYW1lIjoiS2luZ0phbWVzIiwiaWF0IjoxNzIxNDUwOTg0LCJleHAiOjE3MjE0NTQ1ODR9.y-_1NV6D6t1Zxu51tt26hHBpdxBZqaYIDpAfScsZKwU
-
+Authorization: Bearer 
 
 {
     "name": "new name",
     "email": "new_email@example.com"
 }
+
 
 ### login user
 POST   http://localhost:3000/users/login
@@ -46,4 +48,10 @@ Content-Type: application/json
     "username": "KingJames",
     "password": "prueb@123"
 }
+
+
+### logout user
+POST   http://localhost:3000/users/logout
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2OWI0NzEyNjI4NDY3ZjQxNzEzYTI3OCIsInVzZXJuYW1lIjoiS2luZ0phbWVzIiwiaWF0IjoxNzIxNzQ5NjU3LCJleHAiOjE3MjE3NTMyNTd9.zEdquLSmbojZWCzzrieheDN1puwrbXG77ddv5gdswf0
 
